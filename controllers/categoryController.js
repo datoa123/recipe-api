@@ -29,3 +29,35 @@ const getCategoryById = async (req, res) => {
         res.status(404).json({message: error.message})
     }
 }
+
+const updateCategory = async (req, res) => {
+    try {
+        const category = await Category.findByIdAndUpdate(req.params.id, {new: true}, {runValidators: true})
+        if (!category) {
+            res.status(404).json({message: 'Category not found'})
+        }
+        res.status(200).json(category)
+    } catch (error) {
+        res.status(404).json({message: error.message})
+    }
+}
+
+const deleteCategory = async (req, res) => {
+    try {
+        const category = await Category.findByIdAndDelete(req.params.id)
+        if (!category) {
+            res.status(404).json({message: 'Category not found'})
+        }
+        res.status(200).json(category)
+    } catch (error) {
+        res.status(404).json({message: error.message})
+    }
+}
+
+module.exports = {
+    createCategory,
+    getAllCategory,
+    getCategoryById,
+    updateCategory,
+    deleteCategory,
+};

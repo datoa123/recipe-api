@@ -1,13 +1,14 @@
 require('dotenv').config();
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const connectDB = require('./db');
 
-var indexRouter = require('./routes/index');
+const recipeRouter = require('./routes/recipeRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
 
-var app = express();
+const app = express();
 connectDB();
 
 app.use(logger('dev'));
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/recipe', recipeRouter);
+app.use('/category', categoryRouter);
 
 module.exports = app;
